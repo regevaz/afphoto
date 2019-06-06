@@ -3,12 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "cloudinary": "^1.11.0",
+    "cors": "^2.8.4",
+    "dotenv": "^6.0.0",
     "express": "^4.17.1",
     "express-favicon": "^2.0.1",
+    "express-form-data": "^2.0.6",
     "path": "^0.12.7",
+    "@fortawesome/fontawesome-free-brands": "^5.0.13",
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "0.1.0-11",  
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-notify-toast": "^0.5.0",
     "react-scripts": "3.0.1"
+
   },
   "scripts": {
     "start": "node server.js",
