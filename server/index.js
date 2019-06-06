@@ -19,15 +19,10 @@ cloudinary.config({
   
 app.use(cors({ 
   origin: CLIENT_ORIGIN 
-})) 
+}))
 
-app.use(favicon(__dirname + '/build/favicon.ico'));
-// the __dirname is the current directory from where the script is running
-app.use(express.static(__dirname));
-app.use(express.static(path.join(__dirname, 'build')));
-app.get('/ping', function (req, res) {
- return res.send('pong');
-});
+app.use(express.static(path.resolve(__dirname, '../react-ui/build')));
+
 app.get('/wake-up', (req, res) => res.send('👌'))
 
 app.post('/image-upload', (req, res) => {
