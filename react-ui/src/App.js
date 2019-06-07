@@ -11,7 +11,7 @@ import './App.css'
 const toastColor = { 
   background: '#505050', 
   text: '#fff' 
-}
+};
 
 export default class App extends Component {
   
@@ -19,7 +19,7 @@ export default class App extends Component {
     loading: true,
     uploading: false,
     images: []
-  }
+  };
 
   componentDidMount() {
     fetch(`${API_URL}/wake-up`)
@@ -27,43 +27,43 @@ export default class App extends Component {
         if (res.ok) {
           return this.setState({ loading: false })  
         }
-        const msg = 'Something is went wrong with Heroku...'
+        const msg = 'Something is went wrong with Heroku...';
         this.toast(msg, 'custom', 2000, toastColor)
       })
   }
 
-  toast = notify.createShowQueue()
+  toast = notify.createShowQueue();
 
   onChange = e => {
-    const errs = [] 
-    const files = Array.from(e.target.files)
+    const errs = [];
+    const files = Array.from(e.target.files);
 
-    if (files.length > 3) {
-      const msg = 'Only 3 images can be uploaded at a time'
+    if (files.length > 30) {
+      const msg = 'Only 30 images can be uploaded at a time';
       return this.toast(msg, 'custom', 2000, toastColor)  
     }
 
-    const formData = new FormData()
-    const types = ['image/png', 'image/jpeg', 'image/gif']
+    const formData = new FormData();
+    const types = ['image/*', 'video/*'];
 
     files.forEach((file, i) => {
 
       if (types.every(type => file.type !== type)) {
-        errs.push(`'${file.type}' is not a supported format`)
+        errs.push('רק וידאו או תמונות בבקשה')
       }
 
-      if (file.size > 150000) {
-        errs.push(`'${file.name}' is too large, please pick a smaller file`)
+      if (file.size > 1200000) {
+        errs.push('הקובץ גדול מדי...רק עד 10 מגה')
       }
 
       formData.append(i, file)
-    })
+    });
 
     if (errs.length) {
       return errs.forEach(err => this.toast(err, 'custom', 2000, toastColor))
     }
 
-    this.setState({ uploading: true })
+    this.setState({ uploading: true });
 
     fetch(`${API_URL}/image-upload`, {
       method: 'POST',
@@ -83,52 +83,58 @@ export default class App extends Component {
     })
     .catch(err => {
       err.json().then(e => {
-        this.toast(e.message, 'custom', 2000, toastColor)
+        this.toast(e.message, 'custom', 2000, toastColor);
         this.setState({ uploading: false })
       })
     })
-  }
+  };
 
   filter = id => {
     return this.state.images.filter(image => image.public_id !== id)
-  }
+  };
 
   removeImage = id => {
     this.setState({ images: this.filter(id) })
-  }
+  };
 
   onError = id => {
-    this.toast('Oops, something went wrong', 'custom', 2000, toastColor)
+    this.toast('Oops, something went wrong', 'custom', 2000, toastColor);
     this.setState({ images: this.filter(id) })
-  }
+  };
   
   render() {
-    const { loading, uploading, images } = this.state
+    const { loading, uploading, images } = this.state;
     
     const content = () => {
       switch(true) {
         case loading:
-          return <WakeUp />
+          return <WakeUp />;
         case uploading:
-          return <Spinner />
+          return <Spinner />;
         case images.length > 0:
           return <Images 
                   images={images} 
                   removeImage={this.removeImage} 
                   onError={this.onError}
-                 />
+                 />;
         default:
           return <Buttons onChange={this.onChange} />
       }
-    }
+    };
 
     return (
       <div className='container'>
         <Notifications />
+        <div className='center-text title'>
+          הכנסת ספר תורה
+        </div>
+        <div className='center-text subtitle'>
+          משפחת עזריאל - 6.6.2019
+        </div>
+        <div className='center-text'>שתפו תמונות מהאירוע!</div>
         <div className='buttons'>
           {content()}
         </div>
-        <Footer />
       </div>
     )
   }
