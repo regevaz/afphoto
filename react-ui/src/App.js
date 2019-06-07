@@ -48,11 +48,11 @@ export default class App extends Component {
 
     files.forEach((file, i) => {
 
-      if (types.every(type => file.type !== type)) {
-        errs.push('רק וידאו או תמונות בבקשה')
-      }
+      // if (types.every(type => file.type !== type)) {
+      //   errs.push('רק וידאו או תמונות בבקשה')
+      // }
 
-      if (file.size > 1200000) {
+      if (file.size > 12000000) {
         errs.push('הקובץ גדול מדי...רק עד 10 מגה')
       }
 
