@@ -1,7 +1,6 @@
 body {
   font-family: Roboto, sans-serif;
   color: #757575;
-  margin: 0px;
   direction: rtl;
 }
 
@@ -14,14 +13,11 @@ body {
 
 .buttons {
   display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  height: 75vh
+  width: 100%;
+  justify-content: center;
 }
 
 .button {
-  margin: 0 10vw
 }
 
 .images {
@@ -69,6 +65,7 @@ img {
   max-width: 420px;
   padding: 10px;
   border: 1px dashed #999;
+  object-fit: contain;
 }
 
 /* Loading */
@@ -155,6 +152,9 @@ footer .small-button.medium {
 /* Animations */
 .fadein {
   animation: fadein 2s;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 
 @keyframes fadein {
@@ -206,6 +206,18 @@ footer .small-button.medium {
   to {
     text-shadow: 2px 4px 4px rgba(0, 0, 0, 0.55);
   }
+}
+
+.upload-image {
+  display: flex;
+  width: 100%;
+  border: none;
+}
+
+.loading-image {
+  display: flex;
+  width: 200px;
+  border: none;
 }
 
 .center-text {
