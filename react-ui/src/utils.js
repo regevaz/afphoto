@@ -1,6 +1,6 @@
 export const dataURLToBlob = function(dataURL) {
   const BASE64_MARKER = ";base64,";
-  if (dataURL.indexOf(BASE64_MARKER) == -1) {
+  if (dataURL.indexOf(BASE64_MARKER) === -1) {
     var parts = dataURL.split(",");
     var contentType = parts[0].split(":")[1];
     var raw = parts[1];

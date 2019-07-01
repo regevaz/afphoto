@@ -28,39 +28,53 @@ body {
   justify-content: center;
 }
 
+.gallert-content {
+  display: block;
+  min-height: 1px;
+  max-height: 200px;
+  width: 100%;
+  border: 1px solid #ddd;
+  overflow: auto;
+}
+
 .delete {
   position: relative;
   top: 16px;
-  right: 15px
+  right: 15px;
 }
 
-footer svg, .button svg, .delete svg {
+footer svg,
+.button svg,
+.delete svg {
   filter: drop-shadow(3px 3px 3px #999);
   transition: 0.3s;
-  transform: rotate(-0.2deg)
+  transform: rotate(-0.2deg);
 }
 
-footer svg:hover, .button svg:hover, .delete svg:hover {
+footer svg:hover,
+.button svg:hover,
+.delete svg:hover {
   filter: drop-shadow(4px 4px 4px #999);
   transform: rotate(-0.6deg);
-  cursor: pointer
+  cursor: pointer;
 }
 
 .delete svg {
-  filter: drop-shadow(1px 1px 1px #999)
+  filter: drop-shadow(1px 1px 1px #999);
 }
 
 footer svg {
-  filter: drop-shadow(1.5px 1px 1px #999)
+  filter: drop-shadow(1.5px 1px 1px #999);
 }
 
-footer svg:hover, .delete svg:hover {
-  filter: drop-shadow(1.5px 1.5px 1.5px)
+footer svg:hover,
+.delete svg:hover {
+  filter: drop-shadow(1.5px 1.5px 1.5px);
 }
 
-input[type=file] { 
+input[type="file"] {
   visibility: hidden;
-  position: absolute
+  position: absolute;
 }
 
 img {
@@ -72,10 +86,11 @@ img {
 }
 
 /* Loading */
-.loading-wrapper, .loading {
+.loading-wrapper,
+.loading {
   display: flex;
   align-items: center;
-  justify-content: center; 
+  justify-content: center;
   flex-direction: column;
 }
 
@@ -89,7 +104,7 @@ img {
   background: #6762a6;
   border: 3px solid #c9c3e6;
   box-shadow: 1px 2px 2px rgba(0, 0, 0, 0.25);
-  width: 200px;  
+  width: 200px;
   height: 200px;
   box-sizing: border-box;
   animation: pulse-colors 2s infinite alternate linear;
@@ -121,7 +136,7 @@ footer .small-button {
   width: 3.2em;
   height: 3.2em;
   padding: 5px;
-  transition: .3s;
+  transition: 0.3s;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   text-align: center;
 }
@@ -175,16 +190,16 @@ footer .small-button.medium {
 
 .spinner svg {
   background: #f2f2f2;
-  border-radius: 50%
+  border-radius: 50%;
 }
 
 @-webkit-keyframes spin {
-  0%  {
-    -webkit-transform: rotate(0deg)
+  0% {
+    -webkit-transform: rotate(0deg);
   }
   100% {
-    -webkit-transform: rotate(360deg)
-  }   
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 .rolling {
@@ -194,12 +209,12 @@ footer .small-button.medium {
 }
 
 @-webkit-keyframes move {
-  0%  {
+  0% {
     left: -5%;
   }
   100% {
     left: 105%;
-  }   
+  }
 }
 
 @keyframes pulse-icon {
@@ -215,6 +230,7 @@ footer .small-button.medium {
   display: flex;
   width: 100%;
   border: none;
+  cursor: pointer;
 }
 
 .loading-image {
