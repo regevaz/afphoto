@@ -216,11 +216,7 @@ export default class App extends Component {
           return (
             <div className="images-wrapper">
               <Buttons onChange={this.onChange} />
-              <Images
-                images={images}
-                removeImage={this.removeImage}
-                onError={this.onError}
-              />
+              <Images onError={this.onError} />
             </div>
           );
         default:
@@ -233,11 +229,13 @@ export default class App extends Component {
         <Notifications />
         <div className="center-text title">{title}</div>
         <div className="center-text subtitle">{subTitle}</div>
-        <div className="center-text">שתפו תמונות מהאירוע!</div>
-        <div className="gallert-content">
+        <div className="upload-container">
+          <div className="center-text">שתפו תמונות מהאירוע!</div>
+          <div className="buttons">{content()}</div>
+        </div>
+        <div className="gallery-content">
           <Gallery images={gallery} lightboxWidth={isMobile ? 300 : 1536} />
         </div>
-        <div className="buttons">{content()}</div>
       </div>
     );
   }
