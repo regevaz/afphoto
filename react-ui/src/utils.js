@@ -21,3 +21,10 @@ export const dataURLToBlob = function(dataURL) {
 
   return new Blob([uInt8Array], { type: contentType });
 };
+
+export const handleErrors = function(response) {
+  if (!response.ok) {
+      throw Error(response.statusText);
+  }
+  return response;
+};

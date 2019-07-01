@@ -1,19 +1,18 @@
 import React, { Component } from "react";
 import Notifications, { notify } from "react-notify-toast";
 import qs from "query-string";
-import ImageGallery from 'react-image-gallery';
-import Gallery from 'react-grid-gallery';
-import {isMobile} from 'react-device-detect';
-
-
+import ImageGallery from "react-image-gallery";
+import Gallery from "react-grid-gallery";
+import { isMobile } from "react-device-detect";
 
 import Spinner from "./Spinner";
+import Error from "./Error";
 import Images from "./Images";
 import Buttons from "./Buttons";
 import WakeUp from "./WakeUp";
 import { API_URL } from "./config";
 import "./App.css";
-import { dataURLToBlob } from "./utils";
+import { dataURLToBlob, handleErrors } from "./utils";
 
 const toastColor = {
   background: "#505050",
@@ -25,7 +24,7 @@ export default class App extends Component {
     loading: true,
     uploading: false,
     images: [],
-    gallery: [],
+    gallery: []
   };
 
   componentDidMount() {
@@ -34,6 +33,7 @@ export default class App extends Component {
     console.log(params.app);
     this.setState({ app: params.app });
     fetch(`${API_URL}/${params.app}`)
+      .then(handleErrors)
       .then(res => {
         if (res.ok) {
           return res.json();
@@ -47,18 +47,32 @@ export default class App extends Component {
           title: config.title,
           subTitle: config.subTitle
         });
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({ loading: false, error: true });
       });
-
-      fetch(`${API_URL}/list/${params.app}`)
+    fetch(`${API_URL}/list/${params.app}`)
+      .then(handleErrors)
       .then(res => {
         if (res.ok) {
           return res.json();
-        }      
+        }
       })
       .then(list => {
         console.log(list);
-        this.setState({gallery: list.map(i => ({src: i, thumbnail: i, thumbnailWidth: 50, thumbnailHeight: 50}))});
-      });
+        this.setState({
+          gallery: !list
+            ? []
+            : list.map(i => ({
+                src: i,
+                thumbnail: i,
+                thumbnailWidth: 50,
+                thumbnailHeight: 50
+              }))
+        });
+      })
+      .catch(error => console.log(error));
   }
 
   toast = notify.createShowQueue();
@@ -180,7 +194,15 @@ export default class App extends Component {
   };
 
   render() {
-    const { title, subTitle, gallery, loading, uploading, images } = this.state;
+    const {
+      title,
+      subTitle,
+      gallery,
+      loading,
+      uploading,
+      error,
+      images
+    } = this.state;
 
     const content = () => {
       switch (true) {
@@ -188,6 +210,8 @@ export default class App extends Component {
           return <WakeUp />;
         case uploading:
           return <Spinner />;
+        case error:
+          return <Error />;
         case images.length > 0:
           return (
             <div className="images-wrapper">

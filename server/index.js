@@ -10,6 +10,8 @@ const { CLIENT_ORIGIN } = require("./config");
 const express = require("express");
 const favicon = require("express-favicon");
 const path = require("path");
+const HttpStatus = require("http-status-codes");
+
 const port = process.env.PORT || 8080;
 const app = express();
 
@@ -50,14 +52,22 @@ authAsync("PhfZDDH19vLX3xwKPO0JkUxJpYtK1b2R").then(res => {
 app.get("/:appId", (req, res) => {
   console.log(req.params);
   const appId = req.params.appId;
-  getAsync(appId).then(function(result) {
-    console.log(result);
-    const config = JSON.parse(result);
-    res.send({
-      title: config.title,
-      subTitle: config.subTitle
+  getAsync(appId)
+    .then(function(result) {
+      console.log(result);
+      const config = JSON.parse(result);
+      if (!config) {
+        res.sendStatus(HttpStatus.BAD_REQUEST);
+      } else {
+        res.send({
+          title: config.title,
+          subTitle: config.subTitle
+        });
+      }
+    })
+    .catch(e => {
+      res.sendStatus(HttpStatus.BAD_REQUEST);
     });
-  });
 });
 
 app.get("/list/:appId", async (req, res) => {
@@ -65,14 +75,18 @@ app.get("/list/:appId", async (req, res) => {
   const appId = req.params.appId;
   const configStr = await getAsync(appId);
   const config = JSON.parse(configStr);
-  console.log(config.key);
-  try {
-    const result = await resources_by_tag(config.key);
-    console.log(result.resources);
-    res.send(result.resources.map(i => i.secure_url));
-  } catch (e) {
-    console.log(e);
-    res.send(500);
+  if (!config) {
+    res.sendStatus(HttpStatus.BAD_REQUEST);
+  } else {
+    console.log(config.key);
+    try {
+      const result = await resources_by_tag(config.key);
+      console.log(result.resources);
+      res.send(result.resources.map(i => i.secure_url));
+    } catch (e) {
+      console.log(e);
+      res.send(500);
+    }
   }
 });
 
