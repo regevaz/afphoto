@@ -15,15 +15,8 @@ const HttpStatus = require("http-status-codes");
 const port = process.env.PORT || 8080;
 const app = express();
 
-console.log(process.env.CLOUD_NAME);
-console.log(process.env.API_KEY);
+console.log(process.env.CLOUDINARY_URL);
 console.log(process.env.REDISCLOUD_URL);
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.API_KEY,
-  api_secret: process.env.API_SECRET
-});
 
 const client = redis.createClient(process.env.REDISCLOUD_URL, {
   no_ready_check: true
