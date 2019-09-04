@@ -43,6 +43,13 @@ function start() {
     console.log(`redis auth: ${res}`);
   });
 
+  app.get("/general", (req, res) => {
+    console.log('get general quote');
+    res.send({
+      quote: 'Out of your vulnerabilities will come your strength.'
+    });
+  });
+
   app.get("/:appId", (req, res) => {
     console.log(req.params);
     const appId = req.params.appId;
@@ -112,14 +119,6 @@ function start() {
       }
     }
     res.json(uploadedImages);
-  });
-
-  app.get("/general", (req, res) => {
-    console.log('get general quote');
-    res.send({
-      quote: 'Out of your vulnerabilities will come your strength.',
-      subTitle: config.subTitle
-    });
   });
 
   app.get("/*", function(req, res) {
