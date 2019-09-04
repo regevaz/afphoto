@@ -114,6 +114,14 @@ function start() {
     res.json(uploadedImages);
   });
 
+  app.get("/general", (req, res) => {
+    console.log('get general quote');
+    res.send({
+      quote: 'Out of your vulnerabilities will come your strength.',
+      subTitle: config.subTitle
+    });
+  });
+
   app.get("/*", function(req, res) {
     res.sendFile(path.join(__dirname, "build", "index.html"));
   });

@@ -234,8 +234,8 @@ export default class App extends Component {
           <div className="buttons">{content()}</div>
         </div>
         <div className="gallery-content">
-          <Gallery images={gallery} lightboxWidth={isMobile ? 300 : 1536} />
-        </div>
+            <Gallery images={gallery} lightboxWidth={isMobile ? 300 : 1536} />
+          </div>
       </div>
     );
   }
