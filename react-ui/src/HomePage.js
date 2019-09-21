@@ -193,6 +193,18 @@ export default class App extends Component {
     this.setState({ images: this.filter(id) });
   };
 
+  getTodayFact = () => {
+    fetch(`${API_URL}/today`)
+    .then(res => {
+      if (res.ok) {
+        return res.json();      
+      }
+    }).then(todayFact => {
+      console.log(todayFact);
+      this.setState({todayFact: `${todayFact.year}: ${todayFact.text}`});
+    });
+  }
+
   render() {
     const {
       title,
@@ -201,7 +213,8 @@ export default class App extends Component {
       loading,
       uploading,
       error,
-      images
+      images,
+      todayFact
     } = this.state;
 
     const content = () => {
@@ -231,6 +244,8 @@ export default class App extends Component {
         <div className="center-text subtitle">{subTitle}</div>
         <div className="upload-container">
           <div className="center-text">שתפו תמונות מהאירוע!</div>
+          <div onClick={this.getTodayFact}>today fact</div>
+          {todayFact && <div>{todayFact}</div>}
           <div className="buttons">{content()}</div>
         </div>
         <div className="gallery-content">

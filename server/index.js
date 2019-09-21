@@ -5,6 +5,7 @@ const redis = require("redis");
 const formData = require("express-form-data");
 const cors = require("cors");
 const { promisify } = require("util");
+const unirest = require("unirest");
 
 const { CLIENT_ORIGIN } = require("./config");
 
@@ -43,10 +44,37 @@ function start() {
     console.log(`redis auth: ${res}`);
   });
 
+  const secret = 'f23bdaa0-cf46-11e9-958b-abae05127859';
   app.get("/general", (req, res) => {
     console.log('get general quote');
-    res.send({
-      quote: 'Out of your vulnerabilities will come your strength.'
+    console.log(req.headers);
+    const proxySecret = req.headers['x-rapidapi-proxy-secret'];
+    if (!proxySecret || proxySecret !== secret) {
+      res.sendStatus(HttpStatus.FORBIDDEN);
+    } else {
+      res.send({
+        quote: 'Out of your vulnerabilities will come your strength.'
+      });
+    }
+  });
+
+  app.get("/today", (req, res) => {
+    console.log('get date fact');
+    var req = unirest("GET", "https://numbersapi.p.rapidapi.com/6/21/date");
+    req.query({
+      "fragment": "true",
+      "json": "true"
+    });
+
+    req.headers({
+      "x-rapidapi-host": "numbersapi.p.rapidapi.com",
+      "x-rapidapi-key": "1c2e1e399cmshe233c3e9ad3b801p1bacd5jsn175a3b978ba9"
+    });
+
+    req.end(function (response) {
+      if (response.error) throw new Error(response.error);
+      console.log(response.body);
+      res.send(response.body);
     });
   });
 
