@@ -61,18 +61,18 @@ function start() {
   app.get("/today", (req, res) => {
     console.log('get date fact');
     console.log(req.headers);
-    var req = unirest("GET", "https://numbersapi.p.rapidapi.com/6/21/date");
-    req.query({
+    var ureq = unirest("GET", "https://numbersapi.p.rapidapi.com/6/21/date");
+    ureq.query({
       "fragment": "true",
       "json": "true"
     });
 
-    req.headers({
+    ureq.headers({
       "x-rapidapi-host": "numbersapi.p.rapidapi.com",
       "x-rapidapi-key": "1c2e1e399cmshe233c3e9ad3b801p1bacd5jsn175a3b978ba9"
     });
 
-    req.end(function (response) {
+    ureq.end(function (response) {
       if (response.error) throw new Error(response.error);
       console.log(response.body);
       res.send(response.body);
