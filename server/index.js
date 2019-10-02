@@ -60,6 +60,7 @@ function start() {
 
   app.get("/today", (req, res) => {
     console.log('get date fact');
+    console.log(req.headers);
     var req = unirest("GET", "https://numbersapi.p.rapidapi.com/6/21/date");
     req.query({
       "fragment": "true",
